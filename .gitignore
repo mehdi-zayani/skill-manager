@@ -1,0 +1,29 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Java / Maven / Spring Boot
+**/target/
+*.class
+*.log
+
+# Angular / Node.js
+**/node_modules/
+**/dist/
+**/.angular/
+**/coverage/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Local configuration overrides
+**/application-local.yaml
+**/application-local.yml
+**/application-local.properties

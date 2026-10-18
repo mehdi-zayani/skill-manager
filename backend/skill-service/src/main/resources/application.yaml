@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: skill-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB:skill_manager}
+    username: ${POSTGRES_USER:skill_manager}
+    password: ${POSTGRES_PASSWORD:change_me_local}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+
+server:
+  port: 8080
