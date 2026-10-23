@@ -1,10 +1,4 @@
-
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject, of } from 'rxjs';
 import {
@@ -29,12 +23,7 @@ import {
 
 @Component({
   selector: 'app-skill-manager',
-  imports: [
-    FormsModule,
-    ButtonComponent,
-    PanelComponent,
-    SkillBadgeComponent,
-  ],
+  imports: [FormsModule, ButtonComponent, PanelComponent, SkillBadgeComponent],
   templateUrl: './skill-manager.html',
   styleUrl: './skill-manager.scss',
 })
@@ -101,13 +90,11 @@ export class SkillManager implements OnInit {
             })
             .pipe(
               map((response) =>
-                response.items.map(
-                  (skill): SkillSuggestion => ({
-                    id: skill.id,
-                    name: skill.name,
-                    category: skill.category,
-                  }),
-                ),
+                response.items.map((skill): SkillSuggestion => ({
+                  id: skill.id,
+                  name: skill.name,
+                  category: skill.category,
+                })),
               ),
               catchError(() => of([] as SkillSuggestion[])),
               finalize(() => {
@@ -146,9 +133,7 @@ export class SkillManager implements OnInit {
     return (
       normalizedName.length > 0 &&
       (this.selectedExistingSkill ||
-        this.suggestions.some(
-          (skill) => skill.name.trim().toLowerCase() === normalizedName,
-        ))
+        this.suggestions.some((skill) => skill.name.trim().toLowerCase() === normalizedName))
     );
   }
 
@@ -185,8 +170,7 @@ export class SkillManager implements OnInit {
           this.cdr.markForCheck();
         },
         error: () => {
-          this.errorMessage =
-            'Unable to load skills. Make sure the backend is running.';
+          this.errorMessage = 'Unable to load skills. Make sure the backend is running.';
           this.cdr.markForCheck();
         },
       });

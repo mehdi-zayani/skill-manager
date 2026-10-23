@@ -1,4 +1,3 @@
-
 import { Component, input, output } from '@angular/core';
 
 import { Skill, SkillSuggestion } from '../../models/skill.model';

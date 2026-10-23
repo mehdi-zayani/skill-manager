@@ -1,9 +1,5 @@
-
 <main class="skill-manager">
-  <app-panel
-    title="Skill Manager"
-    description="Manage your skills with just a few clicks."
-  >
+  <app-panel title="Skill Manager" description="Manage your skills with just a few clicks.">
     <form class="skill-form" (ngSubmit)="addSkill()">
       <div class="skill-form__field">
         <label for="skill-name">Skill name</label>
@@ -23,20 +19,12 @@
           />
 
           @if (isSearching) {
-            <span
-              class="spinner spinner--small"
-              role="status"
-              aria-label="Searching skills"
-            ></span>
+            <span class="spinner spinner--small" role="status" aria-label="Searching skills"></span>
           }
         </div>
 
         @if (suggestions.length > 0) {
-          <ul
-            id="skill-suggestions"
-            class="suggestions"
-            aria-label="Existing skills"
-          >
+          <ul id="skill-suggestions" class="suggestions" aria-label="Existing skills">
             @for (suggestion of suggestions; track suggestion.id) {
               <li>
                 <button
@@ -70,10 +58,7 @@
         </select>
       </div>
 
-      <app-button
-        type="submit"
-        [disabled]="!name.trim() || alreadyExists || isSubmitting"
-      >
+      <app-button type="submit" [disabled]="!name.trim() || alreadyExists || isSubmitting">
         @if (isSubmitting) {
           <span class="spinner spinner--button" aria-hidden="true"></span>
           Adding...
@@ -84,9 +69,7 @@
     </form>
 
     @if (alreadyExists && name.trim()) {
-      <p class="feedback feedback--info">
-        This skill already exists in the catalog.
-      </p>
+      <p class="feedback feedback--info">This skill already exists in the catalog.</p>
     }
 
     @if (errorMessage) {
@@ -97,11 +80,13 @@
 
     @if (successMessage) {
       <p class="feedback feedback--success" role="status">
-        {{ successMessage === 'Skill ajouté avec succès.'
-          ? 'Skill added successfully.'
-          : successMessage === 'Skill supprimé.'
-            ? 'Skill deleted successfully.'
-            : successMessage }}
+        {{
+          successMessage === 'Skill ajouté avec succès.'
+            ? 'Skill added successfully.'
+            : successMessage === 'Skill supprimé.'
+              ? 'Skill deleted successfully.'
+              : successMessage
+        }}
       </p>
     }
 
@@ -118,11 +103,7 @@
           </p>
         </div>
 
-        <app-button
-          variant="secondary"
-          size="sm"
-          (click)="toggleCatalog()"
-        >
+        <app-button variant="secondary" size="sm" (click)="toggleCatalog()">
           @if (showCatalog) {
             Hide catalog
           } @else {
@@ -138,9 +119,7 @@
             <span>Loading skills...</span>
           </div>
         } @else if (skills.length === 0) {
-          <p class="skills-section__message">
-            No skills found in the catalog.
-          </p>
+          <p class="skills-section__message">No skills found in the catalog.</p>
         } @else {
           <div class="skills-list">
             @for (skill of skills; track skill.id) {
@@ -156,11 +135,7 @@
             <app-button
               variant="ghost"
               size="sm"
-              [ariaLabel]="
-                deleteMode
-                  ? 'Disable delete mode'
-                  : 'Enable delete mode'
-              "
+              [ariaLabel]="deleteMode ? 'Disable delete mode' : 'Enable delete mode'"
               (click)="toggleDeleteMode()"
             >
               @if (deleteMode) {

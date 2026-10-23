@@ -19,9 +19,7 @@ export class SkillApiService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = '/api/v1/skills';
 
-  getSkills(
-    filters: SkillQueryParams = {},
-  ): Observable<PageResponse<Skill>> {
+  getSkills(filters: SkillQueryParams = {}): Observable<PageResponse<Skill>> {
     let params = new HttpParams();
 
     if (filters.search?.trim()) {
@@ -56,20 +54,14 @@ export class SkillApiService {
   }
 
   getSuggestions(query: string): Observable<SkillSuggestion[]> {
-    return this.http.get<SkillSuggestion[]>(
-      `${this.apiUrl}/suggestions`,
-      { params: { q: query } },
-    );
+    return this.http.get<SkillSuggestion[]>(`${this.apiUrl}/suggestions`, { params: { q: query } });
   }
 
   createSkill(request: CreateSkillRequest): Observable<Skill> {
     return this.http.post<Skill>(this.apiUrl, request);
   }
 
-  updateSkill(
-    id: string,
-    request: UpdateSkillRequest,
-  ): Observable<Skill> {
+  updateSkill(id: string, request: UpdateSkillRequest): Observable<Skill> {
     return this.http.put<Skill>(`${this.apiUrl}/${id}`, request);
   }
 
