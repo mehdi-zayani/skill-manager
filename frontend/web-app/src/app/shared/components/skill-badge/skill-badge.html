@@ -1,0 +1,15 @@
+
+<span class="skill-badge">
+  <span class="skill-badge__name">{{ skill().name }}</span>
+
+  @if (removable()) {
+    <button
+      class="skill-badge__remove"
+      type="button"
+      [attr.aria-label]="'Remove ' + skill().name"
+      (click)="remove.emit(skill().id)"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  }
+</span>
