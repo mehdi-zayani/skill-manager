@@ -1,0 +1,17 @@
+<section class="panel" [style.max-width]="maxWidth()">
+  @if (title() || description()) {
+    <header class="panel__header">
+      @if (title()) {
+        <h2 class="panel__title">{{ title() }}</h2>
+      }
+
+      @if (description()) {
+        <p class="panel__description">{{ description() }}</p>
+      }
+    </header>
+  }
+
+  <div class="panel__content">
+    <ng-content />
+  </div>
+</section>

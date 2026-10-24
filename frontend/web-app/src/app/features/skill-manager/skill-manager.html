@@ -1,0 +1,154 @@
+<main class="skill-manager">
+  <app-panel title="Skill Manager" description="Manage your skills with just a few clicks.">
+    @if (alreadyExists && name.trim()) {
+      <p class="feedback feedback--info">This skill already exists in the catalog.</p>
+    }
+
+    @if (errorMessage) {
+      <p class="feedback feedback--error" role="alert">
+        {{ errorMessage }}
+      </p>
+    }
+
+    @if (successMessage) {
+      <p class="feedback feedback--success" role="status">
+        {{
+          successMessage === 'Skill ajouté avec succès.'
+            ? 'Skill added successfully.'
+            : successMessage === 'Skill supprimé.'
+              ? 'Skill deleted successfully.'
+              : successMessage
+        }}
+      </p>
+    }
+
+    <form class="skill-form" (ngSubmit)="addSkill()">
+      <div class="skill-form__field">
+        <label for="skill-name">Skill name</label>
+
+        <div class="skill-form__input-wrapper">
+          <input
+            id="skill-name"
+            name="skillName"
+            type="text"
+            placeholder="e.g. Java, Angular, PostgreSQL..."
+            autocomplete="off"
+            [ngModel]="name"
+            (ngModelChange)="onNameChange($event)"
+            [disabled]="isSubmitting"
+            [attr.aria-expanded]="suggestions.length > 0"
+            aria-controls="skill-suggestions"
+          />
+
+          @if (isSearching) {
+            <span class="spinner spinner--small" role="status" aria-label="Searching skills"></span>
+          }
+        </div>
+
+        @if (suggestions.length > 0) {
+          <ul id="skill-suggestions" class="suggestions" aria-label="Existing skills">
+            @for (suggestion of suggestions; track suggestion.id) {
+              <li>
+                <button
+                  type="button"
+                  class="suggestions__item"
+                  (click)="selectSuggestion(suggestion)"
+                >
+                  <span>{{ suggestion.name }}</span>
+                  <span class="suggestions__category">
+                    {{ categoryLabel(suggestion.category) }}
+                  </span>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="skill-form__field">
+        <label for="skill-category">Category</label>
+
+        <select
+          id="skill-category"
+          name="skillCategory"
+          [(ngModel)]="category"
+          [disabled]="isSubmitting || selectedExistingSkill"
+        >
+          @for (item of categories; track item) {
+            <option [value]="item">{{ categoryLabel(item) }}</option>
+          }
+        </select>
+      </div>
+
+      <app-button type="submit" [disabled]="!name.trim() || alreadyExists || isSubmitting">
+        @if (isSubmitting) {
+          <span class="spinner spinner--button" aria-hidden="true"></span>
+          Adding...
+        } @else {
+          Add skill
+        }
+      </app-button>
+    </form>
+
+    <div class="skills-section">
+      <div class="skills-section__header">
+        <div>
+          <h3>Skill catalog</h3>
+          <p>
+            @if (showCatalog && !isLoading) {
+              {{ skills.length }} skill(s) found
+            } @else {
+              Browse the available skills when needed.
+            }
+          </p>
+        </div>
+
+        <div class="skills-section__actions">
+          @if (showCatalog && skills.length > 0 && !isLoading) {
+            <app-button
+              variant="ghost"
+              size="sm"
+              [ariaLabel]="deleteMode ? 'Disable delete mode' : 'Enable delete mode'"
+              (click)="toggleDeleteMode()"
+            >
+              @if (deleteMode) {
+                Done
+              } @else {
+                Delete skills
+              }
+            </app-button>
+          }
+
+          <app-button variant="secondary" size="sm" (click)="toggleCatalog()">
+            @if (showCatalog) {
+              Hide catalog
+            } @else {
+              Browse catalog
+            }
+          </app-button>
+        </div>
+      </div>
+
+      @if (showCatalog) {
+        @if (isLoading) {
+          <div class="loading-state" role="status">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Loading skills...</span>
+          </div>
+        } @else if (skills.length === 0) {
+          <p class="skills-section__message">No skills found in the catalog.</p>
+        } @else {
+          <div class="skills-list">
+            @for (skill of skills; track skill.id) {
+              <app-skill-badge
+                [skill]="skill"
+                [removable]="deleteMode"
+                (remove)="removeSkill($event)"
+              />
+            }
+          </div>
+        }
+      }
+    </div>
+  </app-panel>
+</main>

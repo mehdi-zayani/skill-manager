@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: var(--space-8) var(--space-4);
+}
+
+@media (max-width: 600px) {
+  :host {
+    padding: var(--space-5) var(--space-3);
+  }
+}
