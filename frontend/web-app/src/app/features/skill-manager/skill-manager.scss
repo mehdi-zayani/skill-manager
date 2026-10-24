@@ -24,14 +24,14 @@
   label {
     color: var(--color-text-secondary);
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   input,
   select {
     width: 100%;
     min-width: 0;
-    min-height: var(--size-control-md);
+    min-height: 2.75rem;
     padding: var(--space-2) var(--space-3);
     color: var(--color-text);
     background-color: var(--color-surface);
@@ -41,21 +41,42 @@
     outline: none;
     transition:
       border-color var(--duration-fast) ease,
-      box-shadow var(--duration-fast) ease;
+      box-shadow var(--duration-fast) ease,
+      background-color var(--duration-fast) ease;
 
-    &:focus {
+    &:hover:not(:disabled) {
+      border-color: var(--color-text-muted);
+    }
+
+    &:focus-visible {
       border-color: var(--color-focus);
-      box-shadow: 0 0 0 3px rgb(99 102 241 / 0.12);
+      box-shadow: 0 0 0 3px rgb(99 102 241 / 0.14);
     }
 
     &:disabled {
-      opacity: 0.6;
+      opacity: 0.65;
       cursor: not-allowed;
+      background-color: var(--color-page);
     }
   }
 
   input::placeholder {
     color: var(--color-text-muted);
+  }
+}
+
+.skill-form__input-wrapper {
+  position: relative;
+
+  input {
+    padding-right: 2.5rem;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    right: var(--space-3);
+    transform: translateY(-50%);
   }
 }
 
@@ -73,7 +94,7 @@
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-panel);
+  box-shadow: 0 10px 25px rgb(15 23 42 / 0.1);
 
   &__item {
     display: flex;
@@ -81,18 +102,23 @@
     justify-content: space-between;
     gap: var(--space-3);
     width: 100%;
-    padding: var(--space-2) var(--space-3);
+    padding: 0.625rem var(--space-3);
     text-align: left;
     color: var(--color-text);
     background: transparent;
     border: 0;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
+    transition: background-color var(--duration-fast) ease;
 
     &:hover,
     &:focus-visible {
       background-color: var(--color-surface-hover);
       outline: none;
+    }
+
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--color-focus);
     }
   }
 
@@ -104,20 +130,29 @@
 }
 
 .feedback {
-  margin: var(--space-3) 0 0;
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   font-size: 0.8125rem;
   line-height: 1.5;
 
   &--info {
     color: var(--color-text-secondary);
+    background-color: var(--color-page);
+    border-color: var(--color-border);
   }
 
   &--error {
     color: var(--color-danger);
+    background-color: rgb(220 38 38 / 0.06);
+    border-color: rgb(220 38 38 / 0.18);
   }
 
   &--success {
     color: var(--color-success);
+    background-color: rgb(21 128 61 / 0.06);
+    border-color: rgb(21 128 61 / 0.18);
   }
 }
 
@@ -131,19 +166,21 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
 
     h3 {
       margin: 0;
       color: var(--color-text);
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 650;
+      letter-spacing: -0.015em;
     }
 
     p {
       margin: var(--space-1) 0 0;
       color: var(--color-text-muted);
       font-size: 0.8125rem;
+      line-height: 1.5;
     }
   }
 
@@ -153,21 +190,6 @@
     color: var(--color-text-secondary);
     font-size: 0.875rem;
     text-align: center;
-  }
-}
-
-.skill-form__input-wrapper {
-  position: relative;
-
-  input {
-    padding-right: 2.5rem;
-  }
-
-  .spinner {
-    position: absolute;
-    top: 50%;
-    right: var(--space-3);
-    transform: translateY(-50%);
   }
 }
 
@@ -204,10 +226,20 @@
   font-size: 0.875rem;
 }
 
-.skills-section__footer {
+.skills-list {
   display: flex;
-  justify-content: flex-end;
-  margin-top: var(--space-4);
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.skills-section {
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
 }
 
 @keyframes spinner-rotate {
@@ -216,25 +248,20 @@
   }
 }
 
-.skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-2);
-}
-
 @media (max-width: 600px) {
   .skill-form {
     align-items: stretch;
     flex-direction: column;
+    gap: var(--space-4);
 
     app-button {
       width: 100%;
     }
   }
+}
 
-  .skills-section {
-    margin-top: var(--space-6);
-    padding-top: var(--space-4);
+@media (max-width: 380px) {
+  .skills-section__header {
+    flex-direction: column;
   }
 }
